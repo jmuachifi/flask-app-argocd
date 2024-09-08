@@ -8,4 +8,4 @@ resources:
 namespace: dev
 images:
 - name: docker.io/jmuachifi/flaks-app-argocd
-  newTag: v1.8
+  newTag: "1.8"
