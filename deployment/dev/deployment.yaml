@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: flaks-app-argocd
+  name: flaks-app-argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flaks-app-argocd
+  template:
+    metadata:
+      labels:
+        app: flaks-app-argocd
+    spec:
+      containers:
+      - image: docker.io/jmuachifi/flaks-app-argocd:latest
+
+        name: flaks-app-argocd
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+          name: http

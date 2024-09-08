@@ -1,2 +1,2 @@
-# flask-app-argocd
-Flask App Deployment with ArgoCD
+# Flask App Deployment with ArgoCD
+![](flask-app-argocd.png)

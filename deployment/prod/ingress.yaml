@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flask-app-argocd-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /prod
+        pathType: Prefix
+        backend:
+          service:
+            name: flask-app-argocd-svc
+            port:
+              name: http

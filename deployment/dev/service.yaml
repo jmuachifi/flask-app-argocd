@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: flask-app-argocd
+  name: flask-app-argocd-svc
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 5000
+  type: ClusterIP
+  selector:
+    app: flask-app-argocd
+

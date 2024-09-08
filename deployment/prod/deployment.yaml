@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: flask-app-argocd
+  name: flask-app-argocd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-app-argocd
+  template:
+    metadata:
+      labels:
+        app: flask-app-argocd
+    spec:
+      containers:
+      - image: docker.io/jmuachifi/flask-app-argocd:latest
+
+        name: flask-app-argocd
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+          name: http
