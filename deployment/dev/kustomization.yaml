@@ -7,5 +7,5 @@ resources:
 - ingress.yaml
 namespace: dev
 images:
-- name: docker.io/jmuachifi/flask-app-argocd
-  newTag: c3fa1ddb4eae11122f538e6b0a02b682f175d1a8
+- name: docker.io/jmuachifi/flaks-app-argocd
+  newTag: 01b711edb7c5f43fa1d19412d170b60a5601f999
