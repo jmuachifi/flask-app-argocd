@@ -16,9 +16,10 @@ spec:
     spec:
       containers:
       - image: docker.io/jmuachifi/flaks-app-argocd:${{ github.sha }}
-
         name: flaks-app-argocd
         imagePullPolicy: Always
+      imagePullSecrets:
+      - name: my-dockerhub-secret
         ports:
         - containerPort: 5000
           name: http
