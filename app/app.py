@@ -1,17 +1,16 @@
-
-from flask import Flask
+from flask import Flask, render_template
 import os
 
 app = Flask(__name__)
 
 @app.route("/dev")
 def dev():
-    return "This is the app instance in Dev enviroment!"
+    return render_template('dev.html', environment="Development")
 
 @app.route("/prod")
-def test():
-    return "This is the app instance in Prod enviroment!"
+def prod():
+    return render_template('prod.html', environment="Production")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True,host='0.0.0.0',port=port)
+    app.run(debug=True, host='0.0.0.0', port=port)
