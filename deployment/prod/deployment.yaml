@@ -15,7 +15,7 @@ spec:
         app: flask-app-argocd
     spec:
       containers:
-      - image: docker.io/jmuachifi/flask-app-argocd:${{ github.sha }}
+      - image: docker.io/jmuachifi/flask-app-argocd:latest
         name: flask-app-argocd
         imagePullPolicy: Always
         ports:
