@@ -5,7 +5,7 @@ resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
-namespace: dev
+namespace: argo-dev-app
 images:
 - name: docker.io/jmuachifi/flask-app-argocd
   newTag: f9ba67bd0cd4bf5d613e72e3ed2adaee38ef55d9
