@@ -15,7 +15,7 @@ spec:
         app: flaks-app-argocd
     spec:
       containers:
-      - image: docker.io/jmuachifi/flaks-app-argocd:latest
+      - image: docker.io/jmuachifi/flaks-app-argocd:v1.1
 
         name: flaks-app-argocd
         imagePullPolicy: Always
