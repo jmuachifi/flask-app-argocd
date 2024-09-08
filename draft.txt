@@ -1,0 +1,89 @@
+#   update_kustomization_dev:
+#     name: Update Kustomization for Dev Environment
+#     runs-on: ubuntu-latest
+#     needs: build_image
+
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v3
+
+
+#     - name: Replace Image Tag in kustomization.yaml
+#       run: |
+#         sed -i "s/newTag: .*/newTag: ${{ github.sha }}/" deployment/dev/kustomization.yaml
+#         cat deployment/dev/kustomization.yaml
+
+#     - name: Install kustomize
+#       run: |
+#         curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+#         sudo mv kustomize /usr/local/bin/
+
+#     - name: Update Kustomization for Dev
+#       run: |
+#         cd deployment/dev
+#         kustomize edit set image ${DOCKER_IMAGE}:${APP_VERSION}
+#         cat kustomization.yaml
+
+#     - name: Commit and Push Changes
+#       run: |
+#         git remote set-url origin https://jmuachifi:${{ secrets.GH_PAT }}@github.com/jmuachifi/flask-app-argocd.git
+#         git config --global user.email "github-actions@github.com"
+#         git config --global user.name "Cloud Expert"
+#         git checkout -B main
+#         git commit -am '[skip ci] DEV manifest-image update'
+#         git push origin main
+
+#         update_kustomization_prod:
+#             name: Update Kustomization for Prod Environment
+#             runs-on: ubuntu-latest
+#             needs: build_image
+#             if: github.event_name == 'workflow_dispatch'
+        
+#             steps:
+#             - name: Checkout Code
+#               uses: actions/checkout@v2
+        
+#             - name: Replace Image Tag in kustomization.yaml
+#               run: |
+#                 sed -i "s/newTag: .*/newTag: ${{ github.sha }}/" deployment/prod/kustomization.yaml
+#                 cat deployment/prod/kustomization.yaml
+        
+#             - name: Commit and Push Changes
+#               run: |
+#                 git remote set-url origin https://jmuachifi:${{ secrets.GH_PAT }}@github.com/jmuachifi/flask-app-argocd.git
+#                 git config --global user.email "github-actions@github.com"
+#                 git config --global user.name "Cloud Expert"
+#                 git commit -am '[skip ci] PROD manifest-image update'
+#                 git push origin main
+
+
+
+#   update_kustomization_prod:
+#     name: Update Kustomization for Prod Environment
+#     runs-on: ubuntu-latest
+#     needs: build_image
+#     if: github.event_name == 'workflow_dispatch'
+
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v2
+
+#     - name: Replace Image Tag in kustomization.yaml
+#       run: |
+#         sed -i "s/newTag: .*/newTag: ${{ github.sha }}/" deployment/prod/kustomization.yaml
+#         cat deployment/prod/kustomization.yaml
+
+#     - name: Commit and Push Changes
+#       run: |
+#         git remote set-url origin https://jmuachifi:${{ secrets.GH_PAT }}@github.com/jmuachifi/flask-app-argocd.git
+#         git config --global user.email "github-actions@github.com"
+#         git config --global user.name "Cloud Expert"
+#         git commit -am '[skip ci] PROD manifest-image update'
+#         git push origin main
+
+
+env:
+  DOCKER_IMAGE: jmuachifi/flask-app-argocd
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  APP_VERSION: ''
