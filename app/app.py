@@ -3,6 +3,10 @@ import os
 
 app = Flask(__name__)
 
+@app.route("/")
+def home():
+    return render_template('home.html', environment="Home")
+
 @app.route("/dev")
 def dev():
     return render_template('dev.html', environment="Development")
