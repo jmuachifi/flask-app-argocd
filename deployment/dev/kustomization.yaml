@@ -8,4 +8,4 @@ resources:
 namespace: argo-dev-app
 images:
 - name: docker.io/jmuachifi/flask-app-argocd
-  newTag: d8706091cbb50b9c15ede4d1cb2de74a71f1464c
+  newTag: b8224ce2e700106d54adeefbeac4c84fe90010f6
