@@ -15,36 +15,33 @@ env:
   APP_VERSION: ''
 
 jobs:
-  build:
-    name: Build Docker Image
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-
-    - name: Set APP_VERSION
-      run: |
-        cd app
-        echo "APP_VERSION=$(grep -E -o '(version = )(.*)' release.txt | cut -d\" -f2)" >> $GITHUB_ENV
-
-    - name: Kaniko Build
-      uses: gcr.io/kaniko-project/executor:v1.9.0-debug
-      with:
-        args: |
-          --context ${GITHUB_WORKSPACE}
-          --dockerfile ${GITHUB_WORKSPACE}/Dockerfile
-          --destination ${DOCKER_IMAGE}:${APP_VERSION}
-          --customPlatform linux/arm
-
-    - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    - name: Push to Docker Hub
-      run: |
-        docker tag ${DOCKER_IMAGE}:${APP_VERSION} ${DOCKER_IMAGE}:latest
-        docker push ${DOCKER_IMAGE}:${APP_VERSION}
-        docker push ${DOCKER_IMAGE}:latest
+    build:
+        name: Build Docker Image
+        runs-on: ubuntu-latest
+    
+        steps:
+        - name: Checkout Code
+          uses: actions/checkout@v3
+    
+        - name: Set APP_VERSION
+          run: |
+            cd app
+            echo "APP_VERSION=$(grep -E -o '(version = )(.*)' release.txt | cut -d\" -f2)" >> $GITHUB_ENV
+    
+        - name: Log in to Docker Hub
+          run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+    
+        - name: Build and Push Docker Image with Kaniko
+          run: |
+            docker run \
+              -v ${GITHUB_WORKSPACE}:/workspace \
+              -v /kaniko/.docker:/kaniko/.docker \
+              gcr.io/kaniko-project/executor:v1.9.0-debug \
+              --context /workspace \
+              --dockerfile /workspace/Dockerfile \
+              --destination ${DOCKER_IMAGE}:${APP_VERSION} \
+              --destination ${DOCKER_IMAGE}:latest \
+              --customPlatform linux/arm
 
   deploy-dev:
     name: Deploy to Dev Environment
