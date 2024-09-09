@@ -72,6 +72,7 @@ jobs:
                 git remote set-url origin https://jmuachifi:${{ secrets.GH_PAT }}@github.com/jmuachifi/flask-app-argocd.git
                 git config --global user.email "github-actions@github.com"
                 git config --global user.name "Cloud Expert"
+                git pull origin main # Pull the latest changes (pull the latest changes before pushing)
                 git commit -am '[skip ci] PROD manifest-image update to ${{ github.sha }}'
                 git push origin main
         
