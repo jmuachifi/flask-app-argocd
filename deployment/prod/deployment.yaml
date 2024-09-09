@@ -18,6 +18,8 @@ spec:
       - image: docker.io/jmuachifi/flask-app-argocd:latest
         name: flask-app-argocd
         imagePullPolicy: Always
+      imagePullSecrets:
+      - name: my-dockerhub-secret
         ports:
         - containerPort: 5000
           name: http

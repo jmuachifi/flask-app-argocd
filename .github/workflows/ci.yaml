@@ -49,7 +49,7 @@ jobs:
         git config --global user.email "github-actions@github.com"
         git config --global user.name "Cloud Expert"
         git checkout -B main
-        git commit -am '[skip ci] DEV manifest-image update Update to ${{ github.sha }} '
+        git commit -am '[skip ci] DEV manifest-image update to ${{ github.sha }} '
         git push origin main
 
   update_kustomization_prod:
@@ -72,6 +72,6 @@ jobs:
                 git remote set-url origin https://jmuachifi:${{ secrets.GH_PAT }}@github.com/jmuachifi/flask-app-argocd.git
                 git config --global user.email "github-actions@github.com"
                 git config --global user.name "Cloud Expert"
-                git commit -am '[skip ci] PROD manifest-image update'
+                git commit -am '[skip ci] PROD manifest-image update to ${{ github.sha }}'
                 git push origin main
         
